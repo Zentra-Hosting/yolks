@@ -6,7 +6,7 @@ LABEL       author="Chriss Quartz" maintainer="quartz@zentrahosting.xyz"
 RUN         useradd -m -d /home/container container
 STOPSIGNAL  SIGINT
 
-# Update and install necessary packages including Google Chrome
+# Update and install necessary packages
 RUN         apt update \
     && apt -y install \
     wget \
@@ -36,8 +36,7 @@ RUN         apt update \
     libxrandr2 \  
     libxss1 \     
     libasound2 \  
-    libgtk-3-0 \  
-    libatk1.0-0 
+    libgtk-3-0 
 
 # Install npm packages globally
 RUN         npm install --global npm@latest typescript ts-node @types/node
