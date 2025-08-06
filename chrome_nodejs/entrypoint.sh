@@ -1,15 +1,16 @@
 #!/bin/bash
 cd /home/container
 
-# Retrieves the internal IP address and exports it for further use.
-export INTERNAL_IP=$(ip route get 1 | awk '{print $NF;exit}')
+# Make internal Docker IP address available to processes.
+INTERNAL_IP=$(ip route get 1 | awk '{print $(NF-2);exit}')
+export INTERNAL_IP
 
-# Displays the currently installed Node.js version.
+# Print Node.js Version
 node -v
 
-# Replaces placeholders in the startup command with actual values.
+# Replace Startup Variables
 MODIFIED_STARTUP=$(echo -e ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g')
-echo -e ":/home/container$ ${MODIFIED_STARTUP}"
+echo ":/home/container$ ${MODIFIED_STARTUP}"
 
-# Executes the modified startup command.
+# Run the Server
 eval ${MODIFIED_STARTUP}
