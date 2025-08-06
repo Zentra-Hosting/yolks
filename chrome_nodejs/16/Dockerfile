@@ -29,11 +29,15 @@ RUN         apt update \
     libtool \
     iputils-ping \
     libnss3 \
-    tini \
-    && wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - \
-    && echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' >> /etc/apt/sources.list \
-    && apt update \
-    && apt install -y google-chrome-stable --no-install-recommends --allow-downgrades
+    libatk1.0-0 \            
+    libcups2 \                
+    libx11-xcb1 \             
+    libxcomposite1 \           
+    libxrandr2 \  
+    libxss1 \     
+    libasound2 \  
+    libgtk-3-0 \  
+    libatk1.0-0 
 
 # Install npm packages globally
 RUN         npm install --global npm@latest typescript ts-node @types/node
