@@ -19,7 +19,7 @@ jobs:
       fail-fast: false
       matrix:
         app:
-          - uptimekuma
+          - ollama
     steps:
       - uses: actions/checkout@v4
       
@@ -47,4 +47,4 @@ jobs:
           push: true
           tags: |
             ghcr.io/${{ steps.lower-repo.outputs.repository }}/apps:${{ matrix.app }}
-            ${{ github.repository_owner == 'pelican-eggs' && format('ghcr.io/parkervcp/apps:{0}', matrix.app) || '' }}
+            ${{ github.repository_owner == 'pelican-eggs' && format('ghcr.io/Zentra-Hosting/apps:{0}', matrix.app) || '' }}
