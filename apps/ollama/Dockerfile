@@ -1,18 +1,21 @@
-FROM        --platform=$TARGETOS/$TARGETARCH ollama/ollama:latest
+FROM ollama/ollama:latest
 
-LABEL       author="Chriss Quartz" maintainer="quartz@zentrahosting.xyz"
+LABEL author="Chriss Quartz" maintainer="quartz@zentrahosting.xyz"
+
+USER root
+
+RUN apt-get update && apt-get install -y tini
 
 RUN useradd -m -d /home/container -s /bin/bash container
 
 WORKDIR /home/container
 
-# Copy your entrypoint script
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-# Change ownership to container user
 RUN chown -R container:container /home/container /entrypoint.sh
+
 USER container
 
-ENTRYPOINT    ["/sbin/tini", "-g", "--"]
-CMD         ["/entrypoint.sh"]
+ENTRYPOINT ["/usr/bin/tini", "-g", "--"]
+CMD ["/entrypoint.sh"]
