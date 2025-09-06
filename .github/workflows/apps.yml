@@ -48,4 +48,4 @@ jobs:
           push: true
           tags: |
             ghcr.io/${{ steps.lower-repo.outputs.repository }}/apps:${{ matrix.app }}
-            ${{ github.repository_owner == 'pelican-eggs' && format('ghcr.io/Zentra-Hosting/apps:{0}', matrix.app) || '' }}
+            ${{ github.repository_owner == 'pelican-eggs' && format('ghcr.io/zentra-hosting/apps:{0}', matrix.app) || '' }}

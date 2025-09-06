@@ -1,4 +1,4 @@
-FROM        --platform=$TARGETOS/$TARGETARCH ghcr.io/Zentra-Hosting/yolks:debian
+FROM        --platform=$TARGETOS/$TARGETARCH ghcr.io/zentra-hosting/yolks:debian
 
 LABEL       author="Torsten Widmann" maintainer="support@goover.de"
 

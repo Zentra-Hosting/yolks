@@ -46,4 +46,4 @@ jobs:
           push: true
           tags: |
             ghcr.io/${{ steps.lower-repo.outputs.repository }}/yolks:erlang_${{ matrix.tag }}
-            ${{ github.repository_owner == 'pelican-eggs' && format('ghcr.io/Zentra-Hostingsting/yolks:erlang_{0}', matrix.tag) || '' }}
+            ${{ github.repository_owner == 'pelican-eggs' && format('ghcr.io/zentra-hostingsting/yolks:erlang_{0}', matrix.tag) || '' }}

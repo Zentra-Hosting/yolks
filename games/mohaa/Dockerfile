@@ -1,4 +1,4 @@
-FROM        ghcr.io/Zentra-Hosting/yolks:debian
+FROM        ghcr.io/zentra-hosting/yolks:debian
 
 LABEL       author="Manuel Dielacher" maintainer="th3dilli@gmx.at"
 

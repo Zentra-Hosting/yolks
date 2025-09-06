@@ -52,4 +52,4 @@ jobs:
           push: true
           tags: |
             ghcr.io/${{ steps.lower-repo.outputs.repository }}/yolks:chrome_nodejs_${{ matrix.tag }}
-            ${{ github.repository_owner == 'pelican-eggs' && format('ghcr.io/Zentra-Hosting/yolks:nodejs_{0}', matrix.tag) || '' }}
+            ${{ github.repository_owner == 'pelican-eggs' && format('ghcr.io/zentra-hosting/yolks:nodejs_{0}', matrix.tag) || '' }}
