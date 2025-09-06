@@ -4,7 +4,7 @@ LABEL author="Chriss Quartz" maintainer="quartz@zentrahosting.xyz"
 
 USER root
 
-RUN apt-get update && apt-get install -y tini
+RUN apt-get update && apt-get install -y tini iproute2 iputils-ping
 
 RUN useradd -m -d /home/container -s /bin/bash container
 
