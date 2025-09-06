@@ -19,7 +19,8 @@ jobs:
       fail-fast: false
       matrix:
         app:
-          - uptimekuma
+          #- uptimekuma
+          - ollama
     steps:
       - uses: actions/checkout@v4
       
