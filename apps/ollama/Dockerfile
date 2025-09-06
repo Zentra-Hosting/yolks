@@ -1,5 +1,5 @@
 # Stage 1: Build Ollama
-FROM        --platform=$TARGETOS/$TARGETARCH ubuntu:24.04
+FROM ubuntu:24.04 AS build
 
 LABEL       author="Chriss Quartz" maintainer="quartz@zentrahosting.xyz"
 
@@ -17,9 +17,6 @@ WORKDIR /app
 # Copy source code (adjust path as needed)
 COPY . .
 
-# Download and install specific CMake version if needed (optional)
-# RUN curl -fsSL https://github.com/Kitware/CMake/releases/download/v3.31.2/cmake-3.31.2-linux-x86_64.tar.gz | tar xz -C /usr/local --strip-components=1
-
 # Build Ollama
 RUN --mount=type=cache,target=/root/.ccache \
     mkdir -p build && cd build && \
@@ -28,13 +25,11 @@ RUN --mount=type=cache,target=/root/.ccache \
     cmake --install . --strip
 
 # Stage 2: Create runtime image compatible with Pterodactyl
-FROM        --platform=$TARGETOS/$TARGETARCH ubuntu:24.04
+FROM ubuntu:24.04
+
+LABEL       author="Chriss Quartz" maintainer="quartz@zentrahosting.xyz"
 
 ENV DEBIAN_FRONTEND=noninteractive
-
-# Add container user
-RUN useradd -m -d /home/container -s /bin/bash container
-ENV USER=container HOME=/home/container
 
 # Install runtime dependencies (adjust as needed)
 RUN apt-get update && apt-get install -y \
@@ -53,12 +48,15 @@ STOPSIGNAL SIGINT
 COPY --from=build /usr/bin/ollama /usr/bin/ollama
 COPY --from=build /usr/lib/ollama /usr/lib/ollama
 
-# Copy entrypoint script
-COPY --chown=container:container entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+RUN         adduser -D -h /home/container container -s /bin/bash container
+USER        container
+ENV         USER=container HOME=/home/container
+WORKDIR     /home/container
+
+STOPSIGNAL SIGINT
 
 # Switch to non-root user
 USER container
 
-ENTRYPOINT ["/usr/bin/tini", "-g", "--", "/entrypoint.sh"]
-CMD ["/usr/bin/ollama", "serve"]
+ENTRYPOINT    ["/sbin/tini", "-g", "--"]
+CMD         ["/entrypoint.sh"]
