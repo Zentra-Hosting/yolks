@@ -36,10 +36,6 @@ RUN apt-get update && apt-get install -y \
     ca-certificates curl ccache libgcc1 libc++-dev libstdc++6 libcurl4 libsqlite3-0 libssl3 tini \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Configure locale
-RUN update-locale LANG=en_US.UTF-8 \
-    && dpkg-reconfigure --frontend noninteractive locales
-
 WORKDIR /home/container
 
 STOPSIGNAL SIGINT
