@@ -29,30 +29,27 @@ RUN         apt update \
     libtool \
     iputils-ping \
     libnss3 \
-    libatk1.0-0 \            
-    libcups2 \                
-    libx11-xcb1 \             
-    libxcomposite1 \           
-    libxrandr2 \  
-    libxss1 \     
-    libasound2 \  
-    libgtk-3-0 \
+    libatk1.0-0 \          
+    libcups2 \            
+    libx11-xcb1 \          
+    libxcomposite1 \      
+    libxrandr2 \            
+    libxss1 \              
+    libasound2 \       
+    libgtk-3-0 \         
     lsb-release \
-    apt-transport-https \ 
-    wget 
-
-RUN apt-get update \
-    && apt-get install -y wget gnupg \
-    && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/googlechrome-linux-keyring.gpg \
-    && sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/googlechrome-linux-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' \
-    && apt-get update \
-    && apt-get install -y google-chrome-stable fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-khmeros fonts-kacst fonts-freefont-ttf libxss1 \
+    apt-transport-https \
+    fonts-ipafont-gothic \
+    fonts-wqy-zenhei \
+    fonts-thai-tlwg \
+    fonts-khmeros \
+    fonts-kacst \
+    fonts-freefont-ttf \
     --no-install-recommends \
-    && rm -rf /var/lib/apt/lists/* \
-    && useradd -d /home/container -m container -s /bin/bash
+    && rm -rf /var/lib/apt/lists/*
 
 # Install npm packages globally
-RUN         npm install --global npm@latest typescript ts-node @types/node
+RUN         npm install --global npm@latest typescript ts-node @types/node puppeteer
 
 USER        container
 ENV         USER=container HOME=/home/container
@@ -62,4 +59,3 @@ COPY        --chown=container:container ./../entrypoint.sh /entrypoint.sh
 RUN         chmod +x /entrypoint.sh
 ENTRYPOINT  ["/usr/bin/tini", "-g", "--"]
 CMD         ["/entrypoint.sh"]
-
