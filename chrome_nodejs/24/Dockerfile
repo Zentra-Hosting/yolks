@@ -6,7 +6,7 @@ LABEL       author="Chriss Quartz" maintainer="quartz@zentrahosting.xyz"
 RUN         useradd -m -d /home/container container
 STOPSIGNAL  SIGINT
 
-# Update and install necessary packages
+# Update and install necessary packages (expanded for Puppeteer/Chromium deps)
 RUN         apt update \
     && apt -y install \
     wget \
@@ -28,15 +28,39 @@ RUN         apt update \
     build-essential \
     libtool \
     iputils-ping \
+    # Puppeteer/Chromium core libs (your originals + missing ones)
     libnss3 \
-    libatk1.0-0 \          
-    libcups2 \            
-    libx11-xcb1 \          
-    libxcomposite1 \      
-    libxrandr2 \            
-    libxss1 \              
-    libasound2 \       
-    libgtk-3-0 \         
+    libatk1.0-0 \
+    libatk-bridge2.0-0 \
+    libcups2 \
+    libx11-xcb1 \
+    libxcomposite1 \
+    libxrandr2 \
+    libxss1 \
+    libasound2 \
+    libgtk-3-0 \
+    libdrm2 \
+    libxkbcommon0 \
+    libatspi2.0-0 \
+    libcairo2 \
+    libdbus-1-3 \
+    libexpat1 \
+    libfontconfig1 \
+    libgbm1 \
+    libglib2.0-0 \
+    libnspr4 \
+    libpango-1.0-0 \
+    libpangocairo-1.0-0 \
+    libx11-6 \
+    libxcb1 \
+    libxdamage1 \
+    libxext6 \
+    libxfixes3 \
+    libxi6 \
+    libxrandr2 \
+    libxrender1 \
+    libxtst6 \
+    # Your other packages
     lsb-release \
     apt-transport-https \
     fonts-ipafont-gothic \
