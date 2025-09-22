@@ -1,4 +1,4 @@
-FROM        --platform=$TARGETOS/$TARGETARCH node:24-bookworm-slim
+FROM        --platform=$TARGETOS/$TARGETARCH node:24
 
 LABEL       author="Chriss Quartz" maintainer="quartz@zentrahosting.xyz"
 
