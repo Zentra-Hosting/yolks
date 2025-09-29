@@ -18,10 +18,23 @@ RUN apt-get update \
 RUN         apt update \
     && apt -y install ffmpeg iproute2 git sqlite3 libsqlite3-dev python3 python3-dev ca-certificates dnsutils tzdata zip tar curl build-essential wget apt-transport-https lsb-release libtool 
 
-RUN         npm install npm@20.17.0 typescript ts-node @types/node --location=global   
+RUN         npm install npm@9.8.1 typescript ts-node @types/node --location=global   
+
+RUN		echo "deb https://notesalexp.org/tesseract-ocr5/$(lsb_release -cs)/ $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/notesalexp.list > /dev/null \
+    && wget -O - https://notesalexp.org/debian/alexp_key.asc | apt-key add - \
+    && apt update \
+    && apt -y install tesseract-ocr
+
 
 RUN   apt update \
-    && apt -y install curl tar bzip2 file wget
+    && apt -y install curl tar bzip2 file wget \
+    && wget https://dot.net/v1/dotnet-install.sh \
+    && mkdir -p /usr/share \
+    && chmod +x dotnet-install.sh \
+    && D_V="$(curl -sSL https://dotnet.microsoft.com/en-us/download/dotnet/7.0 | grep -i  '<h3 id="sdk-7.*">SDK 7.*.*</h3>'  | head -1 | awk -F\" '{print $3}' | awk '{print $2;}' | sed 's/<\/h3>//g')" \
+    && echo $D_V \			
+    && ./dotnet-install.sh -i /usr/share -v $D_V \
+    && ln -s /usr/share/dotnet /usr/bin/dotnet 
 
 USER        container
 ENV         USER=container HOME=/home/container
