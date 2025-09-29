@@ -1,4 +1,4 @@
-name: build chrome nodejs
+name: build puppeteer nodejs
 on:
   workflow_dispatch:
   schedule:
@@ -7,13 +7,13 @@ on:
     branches:
       - master
     paths:
-      - chrome_nodejs/**
+      - puppeteer_nodejs/**
 permissions:
   packages: write
 
 jobs:
   push:
-    name: "yolks:chrome_nodejs_${{ matrix.tag }}"
+    name: "yolks:puppeteer_nodejs_${{ matrix.tag }}"
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -46,10 +46,9 @@ jobs:
           password: ${{ secrets.REGISTRY_TOKEN || secrets.GITHUB_TOKEN }}
       - uses: docker/build-push-action@v6
         with:
-          context: ./nodejs
-          file: ./nodejs/${{ matrix.tag }}/Dockerfile
+          context: ./puppeteer_nodejs
+          file: ./puppeteer_nodejs/${{ matrix.tag }}/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ghcr.io/${{ steps.lower-repo.outputs.repository }}/yolks:chrome_nodejs_${{ matrix.tag }}
-            ${{ github.repository_owner == 'pelican-eggs' && format('ghcr.io/parkervcp/yolks:nodejs_{0}', matrix.tag) || '' }}
+            ghcr.io/${{ steps.lower-repo.outputs.repository }}/yolks:puppeteer_nodejs_${{ matrix.tag }}
