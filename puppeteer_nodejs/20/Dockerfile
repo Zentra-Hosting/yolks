@@ -18,7 +18,7 @@ RUN apt-get update \
 RUN         apt update \
     && apt -y install ffmpeg iproute2 git sqlite3 libsqlite3-dev python3 python3-dev ca-certificates dnsutils tzdata zip tar curl build-essential wget apt-transport-https lsb-release libtool 
 
-RUN         npm install npm typescript ts-node @types/node --location=global   
+RUN         npm install npm@20.17.0 typescript ts-node @types/node --location=global   
 
 RUN   apt update \
     && apt -y install curl tar bzip2 file wget
