@@ -1,4 +1,4 @@
-name: build apps
+name: build puppeteer_nodejs
 on:
   workflow_dispatch:
   schedule:
@@ -7,41 +7,43 @@ on:
     branches:
       - main
     paths:
-      - apps/**
+      - puppeteer_nodejs/**
 jobs:
   push:
-    name: "yolks:apps_${{ matrix.app }}"
+    name: "yolks:puppeteer_nodejs_${{ matrix.tag }}"
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
     strategy:
       fail-fast: false
       matrix:
-        app:
-          - uptimekuma
-          - bluemap
-
+        tag:
+          - 12
+          - 14
+          - 16
+          - 17
+          - 18
+          - 19
+          - 20
+          - 21
+          - 22
+          - 23
+          - 24
     steps:
       - uses: actions/checkout@v4
-
+      # Setup QEMU for ARM64 Build
       - uses: docker/setup-qemu-action@v3
-
       - uses: docker/setup-buildx-action@v3
         with:
           buildkitd-flags: --debug
-
       - uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
       - uses: docker/build-push-action@v5
         with:
-          context: ./apps/${{ matrix.app }}
-          file: ./apps/${{ matrix.app }}/Dockerfile
+          context: ./puppeteer_nodejs
+          file: ./puppeteer_nodejs/${{ matrix.tag }}/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ghcr.io/zentra-hosting/apps:${{ matrix.app }}
+            ghcr.io/zentra-hosting/yolks:puppeteer_nodejs_${{ matrix.tag }}
