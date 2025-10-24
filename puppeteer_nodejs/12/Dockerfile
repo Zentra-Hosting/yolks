@@ -39,7 +39,7 @@ RUN         apt update \
     libgtk-3-0
 
 # Install npm packages globally
-RUN         npm install --global npm@latest typescript ts-node @types/node
+RUN         npm install --global npm@6.14.16 typescript ts-node @types/node
 
 USER        container
 ENV         USER=container HOME=/home/container
